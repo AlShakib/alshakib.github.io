@@ -1,0 +1,27 @@
+<section class="container centered">
+  <div class="about">
+    <h2 class="greeting">Hi</h2>
+    <h1 class="introduction">I'm <strong>{{ .Site.Params.author }}</strong></h1>
+    <h3 class="info">{{ .Site.Params.info }}</h3>
+    {{ with .Site.Params.social }}
+    <ul>
+      {{ range sort . "weight" }}
+        {{ if .icon }}
+          <li>
+            <a href="{{ .url }}" aria-label="{{ .name }}" {{ if .rel }}rel="{{ .rel }}"{{ end }} {{ if .target }}target="{{ .target }}"{{ end }} {{ if .type }}type="{{ .type }}"{{ end }}>
+              <i class="{{ .icon }}" aria-hidden="true"></i>
+              <span>{{ .name }}</span>
+            </a>
+          </li>
+        {{ else }}
+          <li>
+            <a href="{{ .url }}" aria-label="{{ .name }}" {{ if .rel }}rel="{{ .rel }}"{{ end }} {{ if .target }}target="{{ .target }}"{{ end }}>
+              <span>{{ .name }}</span>
+            </a>
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+    {{ end }}
+  </div>
+</section>

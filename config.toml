@@ -1,0 +1,83 @@
+baseurl = "https://alshakib.dev"
+title = "Al Shakib"
+
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+canonifyurls = true
+
+pygmentscodefences = true
+pygmentsUseClasses = true
+pygmentscodefencesguesssyntax = true
+
+[permalinks]
+  blog = "blog/:slug-:day-:month-:year"
+
+[params]
+    author = "Al Shakib"
+    description = "Hello! I’m an Android application developer and a Linux enthusiast who currently lives in Dhaka."
+    keywords = "alshakib,Al Shakib,android,developer,linux,blog,dhaka"
+    info = "Native (Java) Android Developer"
+
+    dateformat = "January 2, 2006"
+
+    hideFooter = false
+    hideCopyright = false
+    since = 2020
+
+    rtl = false
+
+    # Series see also post count
+    maxSeeAlsoItems = 5
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+
+[[params.social]]
+    name = "Telegram"
+    icon = "fab fa-telegram-plane"
+    weight = 1
+    url = "https://t.me/AlShakib"
+    target = "_blank"
+[[params.social]]
+    name = "Twitter"
+    icon = "fab fa-twitter"
+    weight = 2
+    url = "https://twitter.com/_alshakib"
+    target = "_blank"
+[[params.social]]
+    name = "GitHub"
+    icon = "fab fa-github"
+    weight = 3
+    url = "https://github.com/AlShakib"
+    target = "_blank"
+
+
+[languages]
+    [languages.en]
+        languagename = "English"
+
+        [languages.en.menu]
+
+            [[languages.en.menu.main]]
+            name = "About"
+            weight = 1
+            url = "about/"
+
+            [[languages.en.menu.main]]
+            name = "Projects"
+            weight = 2
+            url = "projects/"
+
+            [[languages.en.menu.main]]
+            name = "Blog"
+            weight = 3
+            url = "blog/"
+
+            [[languages.en.menu.main]]
+            name = "Contact"
+            weight = 4
+            url = "contact/"

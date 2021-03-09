@@ -1,0 +1,75 @@
+body {
+  color: #dadada;
+  background-color: #15202b; }
+  body a {
+    color: #36679f; }
+  body h1,
+  body h2,
+  body h3,
+  body h4,
+  body h5,
+  body h6 {
+    color: #dadada; }
+  body code {
+    background-color: #253341;
+    color: #dadada; }
+  body pre {
+    background-color: #253341 !important; }
+    body pre code {
+      background-color: inherit;
+      color: inherit; }
+  body blockquote {
+    border-left: 2px solid #253341; }
+  body table td, body table th {
+    border: 2px solid #dadada; }
+
+body .content .list ul li .title {
+  color: #dadada; }
+  body .content .list ul li .title:hover, body .content .list ul li .title:focus {
+    color: #36679f; }
+
+body .content .centered .about ul li a {
+  color: #dadada;
+  background-color: #192633; }
+  body .content .centered .about ul li a:hover, body .content .centered .about ul li a:focus {
+    color: #36679f; }
+  @media only screen and (max-width: 768px) {
+    body .content .centered .about ul li a {
+      font-size: 1.4rem;
+      background-color: transparent; } }
+body .is-scrolling {
+  background-color: #192633 !important; }
+
+body .navigation {
+  background-color: #15202b;
+  position: fixed; }
+  body .navigation a, body .navigation span {
+    color: #dadada; }
+  body .navigation a:hover, body .navigation a:focus, body .navigation span:hover, body .navigation span:focus {
+    cursor: pointer;
+    color: #36679f; }
+  @media only screen and (max-width: 768px) {
+    body .navigation .navigation-list {
+      background-color: #15202b;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2); } }
+  @media only screen and (max-width: 768px) {
+    body .navigation .navigation-list .menu-separator {
+      border-top: 2px solid #dadada; } }
+  @media only screen and (max-width: 768px) {
+    body .navigation #menu-toggle:checked + label {
+      color: #253341; } }
+  @media only screen and (max-width: 768px) {
+    body .navigation .menu-button {
+      color: #dadada; }
+      body .navigation .menu-button:hover, body .navigation .menu-button:focus {
+        color: #36679f; } }
+  body .navigation .go-to-top {
+    background-color: #192633;
+    color: #dadada; }
+    body .navigation .go-to-top:hover {
+      color: #36679f; }
+
+body .footer a {
+  color: #36679f; }
+
+/*# sourceMappingURL=alshakib-dark.css.map */

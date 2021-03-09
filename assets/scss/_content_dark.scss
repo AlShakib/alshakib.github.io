@@ -1,0 +1,46 @@
+@mixin content_dark {
+
+  .content {
+  
+    .list {
+      ul {
+        li {
+          .title {
+            color: $fg-color-dark;
+            &:hover,
+            &:focus {
+              color: $link-color-dark;
+            }
+          }
+        }
+      }
+    }
+
+    .centered {
+      .about {
+        ul {
+          li {
+            a {
+              color: $fg-color-dark;
+              background-color: $bg-color-elevated-dark;
+              &:hover,
+              &:focus {
+                color: $link-color-dark;
+              }
+              @media only screen and (max-width : 768px) {
+                font-size: 1.4rem;
+                background-color: transparent;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+body {
+  @include content_dark()
+}
+

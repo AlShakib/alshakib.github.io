@@ -1,0 +1,123 @@
+.is-scrolling {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+}
+.navigation {
+  height: 6.0rem;
+  width: 100%;
+  background-color: $bg-color;
+  position: fixed;
+  a, span {
+    display: inline;
+    font-size: 1.6rem;
+    font-family: $heading-font-family;
+    font-weight: 800;
+    line-height: 6.0rem;
+    color: $fg-color;
+  }
+  a, span {
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      color: $link-color
+    }
+  }
+  .navigation-title {
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+  }
+  .navigation-list {
+    float: right;
+    list-style: none;
+    margin-bottom: 0;
+    margin-top: 0;
+    box-shadow: none;
+    @media only screen and (max-width : 768px) {
+      position: absolute;
+      top: 6.0rem;
+      right: 0;
+      z-index: 5;
+      visibility: hidden;
+      opacity: 0;
+      padding: 0;
+      max-height: 0;
+      width: 100%;
+      background-color: $bg-color;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+      transition: opacity 0.25s, max-height 0.15s linear;
+    }
+    .navigation-item {
+      float: left;
+      margin: 0;
+      position: relative;
+      @media only screen and (max-width : 768px) {
+        float: none !important;
+        text-align: center;
+        a, span {
+          line-height: 5.0rem;
+        }
+      }
+      a, span {
+        margin-left: 1.0rem;
+        margin-right: 1.0rem;
+      }
+    }
+    .menu-separator {
+      pointer-events: none;
+      @media only screen and (max-width : 768px) {
+        border-top: 2px solid $fg-color;
+        margin: 0 8.0rem;
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+  #menu-toggle {
+    display: none;
+    @media only screen and (max-width : 768px) {
+      &:checked + label {
+        color: $alt-bg-color;
+      }
+      &:checked + label + ul {
+        visibility: visible;
+        opacity: 1;
+        max-height: 100rem;
+      }
+    }
+  }
+  .menu-button {
+    display: none;
+    @media only screen and (max-width : 768px) {
+      display: block;
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 6.0rem;
+      color: $fg-color;
+      cursor: pointer;
+      &:hover,
+      &:focus {
+        color: $link-color
+      }
+    }
+  }
+  .go-to-top {
+    display: none;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: $bg-color;
+    color: $fg-color;
+    cursor: pointer;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    &:hover {
+      color: $link-color;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+  }
+}

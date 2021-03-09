@@ -1,0 +1,11 @@
+@mixin footer_dark {
+  .footer {
+    a {
+      color: $link-color-dark;
+    }
+  }
+}
+
+body {
+  @include footer_dark()
+}

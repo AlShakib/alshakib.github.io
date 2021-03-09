@@ -1,0 +1,11 @@
+<section class="container page">
+  <article>
+    <header>
+      <h1>{{ .Title }}</h1>
+    </header>
+
+    {{ .Content }}
+  </article>
+  
+  {{ partial "math.html" . }}
+</section>

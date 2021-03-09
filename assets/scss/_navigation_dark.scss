@@ -1,0 +1,60 @@
+@mixin navigation_dark {
+  .is-scrolling {
+    background-color: $bg-color-elevated-dark !important;
+  }
+
+  .navigation {
+    background-color: $bg-color-dark;
+    position: fixed;
+    a, span {
+      color: $fg-color-dark;
+    }
+    a, span {
+      &:hover,
+      &:focus {
+        cursor: pointer;
+        color: $link-color-dark;
+      }
+    }
+    .navigation-list {
+      @media only screen and (max-width : 768px) {
+        background-color: $bg-color-dark;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+      }
+      .menu-separator {
+        @media only screen and (max-width : 768px) {
+          border-top: 2px solid $fg-color-dark;
+        }
+      }
+    }
+    #menu-toggle {
+      @media only screen and (max-width : 768px) {
+        &:checked + label {
+          color: $alt-bg-color-dark;
+        }
+      }
+    }
+    .menu-button {
+      @media only screen and (max-width : 768px) {
+        color: $fg-color-dark;
+        &:hover,
+        &:focus {
+          color: $link-color-dark;
+        }
+      }
+    }
+    .go-to-top {
+      background-color: $bg-color-elevated-dark;
+      color: $fg-color-dark;
+      &:hover {
+        color: $link-color-dark;
+      }
+    }
+  }
+
+}
+
+body {
+  @include navigation_dark()
+}
+

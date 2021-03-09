@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+  <head>
+    <script type="text/javascript">
+      if (window.location.hostname.indexOf("www") == 0) {
+        window.location.replace(window.location.href.replace("www.",""));
+      } else if (window.location.hostname.indexOf("blog") == 0) {
+        {{ with .Site.BaseURL }}  window.location.replace("{{ . }}/blog"); {{ end }}
+      }
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="theme-color" name="theme-color" content="#fafafa" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/fav/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/fav/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/fav/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/fav/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/fav/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/fav/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/fav/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/fav/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/images/fav/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/fav/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/fav/favicon-16x16.png">
+    <link rel="manifest" href="fav/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="fav/ms-icon-144x144.png">
+
+    {{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+
+    {{ if .Page.Params.description }}
+      {{ with .Page.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+    {{ else }}
+      {{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+    {{ end }}
+
+    {{ if .Page.Params.keywords }}
+      {{ with .Page.Params.keywords }}<meta name="keywords" content="{{ delimit . "," }}">{{ end }}
+    {{ else }}
+      {{ with .Site.Params.keywords }}<meta name="keywords" content="{{ . }}">{{ end }}
+    {{ end }}
+
+    {{ template "_internal/opengraph.html" . }}
+    {{ if .Page.Params.featured_image }}
+      {{ with .Page.Params.featured_image }}<meta property="og:image" itemprop="image primaryImageOfPage" content="{{ . | absURL }}" />{{ end }}
+      {{ with .Page.Params.featured_image }}<meta property="og:image:secure_url" itemprop="image primaryImageOfPage" content="{{ . | absURL }}" />{{ end }}
+    {{ end }}
+
+    {{ template "_internal/twitter_cards.html" . }}
+    {{ if .Page.Params.featured_image }}
+      {{ with .Page.Params.featured_image }}<meta property="twitter:image:src" content="{{ . | absURL }}" />{{ end }}
+    {{ end }}
+
+    {{ if .Permalink }}
+      <base href="{{ .Permalink }}">
+    {{ end }}
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+
+    {{ if .Permalink }}
+      <link rel="canonical" href="{{ .Permalink }}">
+    {{ end }}
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,800;1,600;1,800&family=Source+Code+Pro:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    {{ if .Site.IsServer }}
+      {{ $cssOpts := (dict "targetPath" "css/alshakib.css" "enableSourceMap" true ) }}
+      {{ $styles := resources.Get "scss/alshakib.scss" | resources.ExecuteAsTemplate "style.alshakib.css" . | toCSS $cssOpts }}
+      <link id="light-css" rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+      <link id="light-syntax-highlight" rel="stylesheet" href="/css/friendly.css"/>
+    {{ else }}
+      {{ $cssOpts := (dict "targetPath" "css/alshakib.css" ) }}
+      {{ $styles := resources.Get "scss/alshakib.scss" | resources.ExecuteAsTemplate "style.alshakib.css" . | toCSS $cssOpts | minify | fingerprint }}
+      <link id="light-css" rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
+      <link id="light-syntax-highlight" rel="stylesheet" href="/css/friendly.css"/>
+    {{ end }}
+
+    {{ if .Site.Params.rtl }}
+      {{ if .Site.IsServer }}
+        {{ $cssOpts := (dict "targetPath" "css/alshakib-rtl.css" "enableSourceMap" true ) }}
+        {{ $styles := resources.Get "scss/alshakib-rtl.scss" | resources.ExecuteAsTemplate "style.alshakib-rtl.css" . | toCSS $cssOpts }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+      {{ else }}
+        {{ $cssOpts := (dict "targetPath" "css/alshakib-rtl.css" ) }}
+        {{ $styles := resources.Get "scss/alshakib-rtl.scss" | resources.ExecuteAsTemplate "style.alshakib-rtl.css" . | toCSS $cssOpts | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
+      {{ end }}
+    {{ end }}
+
+    {{ if .Site.IsServer }}
+      {{ $cssOpts := (dict "targetPath" "css/alshakib-dark.css" "enableSourceMap" true ) }}
+      {{ $styles := resources.Get "scss/alshakib-dark.scss" | resources.ExecuteAsTemplate "style.alshakib-dark.css" . | toCSS $cssOpts }}
+      <link id="dark-css" rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+      <link id="dark-syntax-highlight" rel="stylesheet" href="/css/native.css"/>
+    {{ else }}
+      {{ $cssOpts := (dict "targetPath" "css/alshakib-dark.css" ) }}
+      {{ $styles := resources.Get "scss/alshakib-dark.scss" | resources.ExecuteAsTemplate "style.alshakib-dark.css" . | toCSS $cssOpts | minify | fingerprint }}
+      <link id="dark-css" rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
+      <link id="dark-syntax-highlight" rel="stylesheet" href="/css/native.css"/>
+    {{ end }}
+
+    <script type="text/javascript">
+      function setDarkTheme() {
+        document.getElementById('dark-css').disabled = false;
+        document.getElementById('dark-syntax-highlight').disabled = false;
+        document.getElementById('theme-color').content = '#15202b';
+        localStorage.setItem('theme', 'dark');
+      }
+      function setLightTheme() {
+        document.getElementById('dark-css').disabled = true;
+        document.getElementById('dark-syntax-highlight').disabled = true;
+        document.getElementById('theme-color').content = '#fafafa';
+        localStorage.setItem('theme', 'light');
+      }
+      function getTheme() {
+        return localStorage.getItem('theme');
+      }
+      if (getTheme() == 'dark') {
+        setDarkTheme();
+      } else if (getTheme() != 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setDarkTheme();
+      } else {
+        setLightTheme();
+      }
+    </script>
+
+    {{ range .Site.Params.custom_scss }}
+      {{/* We don't change the targetPath to because it's transparent to users */}}
+      {{ if $.Site.IsServer }}
+        {{ $cssOpts := (dict "enableSourceMap" true ) }}
+        {{ $styles := resources.Get . | toCSS $cssOpts }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+      {{ else }}
+        {{ $styles := resources.Get . | toCSS | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
+      {{ end }}
+    {{ end }}
+
+    <link rel="alternate" type="application/rss+xml" href="https://alshakib.dev/blog/index.xml" title="Al Shakib's Blog">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MM1547446W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-MM1547446W');
+    </script>
+
+  </head>
+
+  {{ $csClass := "colorscheme-light" }}
+  {{ if eq .Site.Params.colorscheme "dark" }}
+    {{ $csClass = "colorscheme-dark" }}
+  {{ else if eq .Site.Params.colorscheme "auto" }}
+    {{ $csClass = "colorscheme-auto" }}
+  {{ end }}
+  <body class="{{ $csClass }}{{ if .Site.Params.rtl }} rtl{{ end }}">
+    <main class="wrapper">
+      {{ partial "header.html" . }}
+
+      <div id="main-content" class="content">
+        {{ block "content" . }}{{ end }}
+      </div>
+
+      {{ partial "footer.html" . }}
+    </main>
+
+    <script type="text/javascript">
+      var menuToggleButton = document.getElementById('menu-toggle');
+      document.getElementById('main-content').onclick = function(e) {
+        menuToggleButton.checked = false;
+      }
+    </script>
+  </body>
+
+</html>

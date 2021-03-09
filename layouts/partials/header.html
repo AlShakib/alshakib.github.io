@@ -1,0 +1,84 @@
+<nav id="navbar" class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="{{ .Site.BaseURL | relLangURL }}">
+      {{ i18n "navigation_title" }}
+    </a>
+    {{ if or .Site.Menus.main .Site.IsMultiLingual }}
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul id="navbar-list" class="navigation-list">
+      {{ with .Site.Menus.main}}
+        {{ range sort . }}
+          <li class="navigation-item">
+            <a class="navigation-link" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
+          </li>
+        {{ end }}
+      {{ end }}
+      {{ if .Site.IsMultiLingual }}
+        {{ $node := . }}
+        {{ .Scratch.Set "separator" true }}
+        {{ range .Translations }}
+          {{ if ne $.Site.Language .Language }}
+            {{ if $node.Scratch.Get "separator" }}
+              <li class="navigation-item menu-separator">
+                <span>|</span>
+              </li>
+              {{ $node.Scratch.Set "separator" false }}
+            {{ end }}
+            <li class="navigation-item">
+              <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+            </li>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      <li class="navigation-item menu-separator">
+        <span>|</span>
+      </li>
+      <li class="navigation-item">
+          <span onclick="onClickSwitchTheme()">
+            <i id="theme-icon" class="fas fa-moon"></i>
+          </span>
+      </li>
+    </ul>
+    {{ end }}
+  </section>
+  <button class="go-to-top" onclick="onClickGoToTop()" id="go-to-top-button" title="Go to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+</nav>
+
+<script type="text/javascript">
+  var themeIcon = document.getElementById('theme-icon');
+  var goToButton = document.getElementById('go-to-top-button');
+  if (getTheme() == 'dark') {
+    themeIcon.className = 'fas fa-sun';
+  } else {
+    themeIcon.className = 'fas fa-moon';
+  }
+  var navbar = document.getElementById('navbar');
+  var navbarList = document.getElementById('navbar-list');
+  window.onscroll = function() {
+    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+      navbar.className = 'navigation is-scrolling';
+      navbarList.className = 'navigation-list is-scrolling';
+      goToButton.style.display = 'block';
+    } else {
+      navbar.className = 'navigation';
+      navbarList.className = 'navigation-list';
+      goToButton.style.display = 'none';
+    }
+  }
+  function onClickSwitchTheme() {
+    if (getTheme() == 'dark') {
+      setLightTheme();
+      themeIcon.className = 'fas fa-moon';
+    } else {
+      setDarkTheme();
+      themeIcon.className = 'fas fa-sun';
+    }
+  }
+  function onClickGoToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+</script>
