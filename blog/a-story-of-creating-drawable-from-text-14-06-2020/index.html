@@ -1,0 +1,474 @@
+<!doctype html><html lang=en><head><script type=text/javascript>window.location.hostname.indexOf("www")==0?window.location.replace(window.location.href.replace("www.","")):window.location.hostname.indexOf("blog")==0&&window.location.replace("https://alshakib.dev/blog")</script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta id=theme-color name=theme-color content="#fafafa"><link rel=apple-touch-icon sizes=57x57 href=https://alshakib.dev/images/fav/apple-icon-57x57.png><link rel=apple-touch-icon sizes=60x60 href=https://alshakib.dev/images/fav/apple-icon-60x60.png><link rel=apple-touch-icon sizes=72x72 href=https://alshakib.dev/images/fav/apple-icon-72x72.png><link rel=apple-touch-icon sizes=76x76 href=https://alshakib.dev/images/fav/apple-icon-76x76.png><link rel=apple-touch-icon sizes=114x114 href=https://alshakib.dev/images/fav/apple-icon-114x114.png><link rel=apple-touch-icon sizes=120x120 href=https://alshakib.dev/images/fav/apple-icon-120x120.png><link rel=apple-touch-icon sizes=144x144 href=https://alshakib.dev/images/fav/apple-icon-144x144.png><link rel=apple-touch-icon sizes=152x152 href=https://alshakib.dev/images/fav/apple-icon-152x152.png><link rel=apple-touch-icon sizes=180x180 href=https://alshakib.dev/images/fav/apple-icon-180x180.png><link rel=icon type=image/png sizes=192x192 href=https://alshakib.dev/images/fav/android-icon-192x192.png><link rel=icon type=image/png sizes=32x32 href=https://alshakib.dev/images/fav/favicon-32x32.png><link rel=icon type=image/png sizes=96x96 href=https://alshakib.dev/images/fav/favicon-96x96.png><link rel=icon type=image/png sizes=16x16 href=https://alshakib.dev/images/fav/favicon-16x16.png><link rel=manifest href=fav/manifest.json><meta name=msapplication-TileColor content="#ffffff"><meta name=msapplication-TileImage content="fav/ms-icon-144x144.png"><meta name=author content="Al Shakib"><meta name=description content="This is a short story about how and why I created the Android DText Library. DText (for curious mind, it is DrawableText) is a minimal Android Library that creates beautiful drawable from a string. You can use it from anywhere in your project. It is written in Java. The source code is published under GPLv3."><meta name=keywords content="android,library,dtext,drawable,minimal,story,drawable,open source"><meta property="og:title" content="A Story of Creating Drawable From Text"><meta property="og:description" content="This is a short story about how and why I created the Android DText Library. DText (for curious mind, it is DrawableText) is a minimal Android Library that creates beautiful drawable from a string. You can use it from anywhere in your project. It is written in Java. The source code is published under GPLv3."><meta property="og:type" content="article"><meta property="og:url" content="https://alshakib.dev/blog/a-story-of-creating-drawable-from-text-14-06-2020/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2020-06-14T21:37:00+06:00"><meta property="article:modified_time" content="2020-06-14T21:37:00+06:00"><meta property="og:image" itemprop="image primaryImageOfPage" content="https://alshakib.dev/images/story_of_android_dtext_library/dtext_logo.png"><meta property="og:image:secure_url" itemprop="image primaryImageOfPage" content="https://alshakib.dev/images/story_of_android_dtext_library/dtext_logo.png"><meta name=twitter:card content="summary"><meta name=twitter:title content="A Story of Creating Drawable From Text"><meta name=twitter:description content="This is a short story about how and why I created the Android DText Library. DText (for curious mind, it is DrawableText) is a minimal Android Library that creates beautiful drawable from a string. You can use it from anywhere in your project. It is written in Java. The source code is published under GPLv3."><meta property="twitter:image:src" content="https://alshakib.dev/images/story_of_android_dtext_library/dtext_logo.png"><base href=https://alshakib.dev/blog/a-story-of-creating-drawable-from-text-14-06-2020/><title>A Story of Creating Drawable From Text · Al Shakib</title><link rel=canonical href=https://alshakib.dev/blog/a-story-of-creating-drawable-from-text-14-06-2020/><link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,800;1,600;1,800&family=Source+Code+Pro:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.13.0/css/all.css integrity=sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin=anonymous><link id=light-css rel=stylesheet href=https://alshakib.dev/css/alshakib.min.fef4aa0ff7d75a6364a16015b351091af80e6049cf51453774a6808eaee4bf8e.css integrity="sha256-/vSqD/fXWmNkoWAVs1EJGvgOYEnPUUU3dKaAjq7kv44=" crossorigin=anonymous media=screen><link id=light-syntax-highlight rel=stylesheet href=https://alshakib.dev/css/friendly.css><link id=dark-css rel=stylesheet href=https://alshakib.dev/css/alshakib-dark.min.b4fcd07d4dc7c9b2adc39edac400748abb4b18bc1b02ef697546bd6ac3681e86.css integrity="sha256-tPzQfU3HybKtw57axAB0irtLGLwbAu9pdUa9asNoHoY=" crossorigin=anonymous media=screen><link id=dark-syntax-highlight rel=stylesheet href=https://alshakib.dev/css/native.css><script type=text/javascript>function setDarkTheme(){document.getElementById('dark-css').disabled=!1,document.getElementById('dark-syntax-highlight').disabled=!1,document.getElementById('theme-color').content='#15202b',localStorage.setItem('theme','dark')}function setLightTheme(){document.getElementById('dark-css').disabled=!0,document.getElementById('dark-syntax-highlight').disabled=!0,document.getElementById('theme-color').content='#fafafa',localStorage.setItem('theme','light')}function getTheme(){return localStorage.getItem('theme')}getTheme()=='dark'?setDarkTheme():getTheme()!='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches?setDarkTheme():setLightTheme()</script><link rel=alternate type=application/rss+xml href=https://alshakib.dev/blog/index.xml title="Al Shakib's Blog"><script async src="https://www.googletagmanager.com/gtag/js?id=G-MM1547446W"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-MM1547446W')</script></head><body class=colorscheme-light><main class=wrapper><nav id=navbar class=navigation><section class=container><a class=navigation-title href=https://alshakib.dev/>Home</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fas fa-bars"></i></label><ul id=navbar-list class=navigation-list><li class=navigation-item><a class=navigation-link href=https://alshakib.dev/about/>About</a></li><li class=navigation-item><a class=navigation-link href=https://alshakib.dev/projects/>Projects</a></li><li class=navigation-item><a class=navigation-link href=https://alshakib.dev/blog/>Blog</a></li><li class=navigation-item><a class=navigation-link href=https://alshakib.dev/contact/>Contact</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class=navigation-item><span onclick=onClickSwitchTheme()><i id=theme-icon class="fas fa-moon"></i></span></li></ul></section><button class=go-to-top onclick=onClickGoToTop() id=go-to-top-button title="Go to top">
+<i class="fas fa-chevron-up"></i></button></nav><script type=text/javascript>var themeIcon=document.getElementById('theme-icon'),goToButton=document.getElementById('go-to-top-button'),navbar,navbarList;getTheme()=='dark'?themeIcon.className='fas fa-sun':themeIcon.className='fas fa-moon',navbar=document.getElementById('navbar'),navbarList=document.getElementById('navbar-list'),window.onscroll=function(){document.body.scrollTop>0||document.documentElement.scrollTop>0?(navbar.className='navigation is-scrolling',navbarList.className='navigation-list is-scrolling',goToButton.style.display='block'):(navbar.className='navigation',navbarList.className='navigation-list',goToButton.style.display='none')};function onClickSwitchTheme(){getTheme()=='dark'?(setLightTheme(),themeIcon.className='fas fa-moon'):(setDarkTheme(),themeIcon.className='fas fa-sun')}function onClickGoToTop(){document.body.scrollTop=0,document.documentElement.scrollTop=0}</script><div id=main-content class=content><section class="container post"><article><header><div class=post-title><h1 class=title>A Story of Creating Drawable From Text</h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fas fa-calendar-alt"></i><time datetime=2020-06-14T21:37:00+06:00>June 14, 2020</time></span>
+<span class=reading-time><i class="fas fa-clock"></i>10 min read</span></div><div class=categories><i class="fas fa-folder"></i><a href=https://alshakib.dev/categories/android/>Android</a></div><div class=tags><i class="fas fa-tag"></i><a href=https://alshakib.dev/tags/drawable/>drawable</a>
+<span class=separator>•</span>
+<a href=https://alshakib.dev/tags/dtext/>dtext</a>
+<span class=separator>•</span>
+<a href=https://alshakib.dev/tags/library/>library</a></div></div></header><div><img src=https://alshakib.dev/images/story_of_android_dtext_library/dtext_logo.png alt="Featured image"><aside><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a></li><li><a href=#initial-thoughts>Initial Thoughts</a></li><li><a href=#getting-started>Getting Started</a></li><li><a href=#testing>Testing</a></li><li><a href=#adding-customization>Adding Customization</a></li><li><a href=#final-words>Final Words</a></li></ul></nav></aside><h2 id=introduction>Introduction</h2><p>Today I’m going to release the initial version of Android DText Library. It converts string text to a drawable image. You can find the GitHub repository <a href=https://github.com/AlShakib/AndroidDTextLibrary target=_blank>here</a>
+.</p><p>I created DText as a part of my other personal (Yet unfinished) project. What I needed was to create an icon (or you can say avatar) with the first character of the title. Like <a href="https://play.google.com/store/apps/details?id=com.google.android.contacts" target=_blank>Contacts</a>
+app from Google. As I’m a lazy human being, I was looking for a simple solution. After a few searches on Google, I found a library that does create drawables from text. <a href=https://github.com/amulyakhare/TextDrawable target=_blank>Here</a>
+is that library in case you are interested.</p><p>But the problem was that it was not maintained for a long time. The maintainer seems to be inactive and does not accept pull requests. Also It does not let me customize as much as I need. So, I thought why not create a new library for my present and future use.</p><p>In this article I&rsquo;m going to explain how I created the DText class that converts strings to drawable.</p><h2 id=initial-thoughts>Initial Thoughts</h2><p>What I need is a class/library that takes a string as input and gives me a nice drawable image as output. The drawable image can be a round shaped, a rounded-rectangle shape or a rectangle shape. Initially I can work with these three basic shapes, but I may implement more shapes in the future as well. Also, I need full control over the font or typeface that is going to be drawn on the canvas. I need regular, bold, italic and bold italic font weight. I may implement light font weight in the future as well.</p><h2 id=getting-started>Getting Started</h2><p>Thinking of a solution, I found out about the <code>ShapeDrawable</code> class. Android Developer Reference says,</p><blockquote><p>A Drawable object that draws primitive shapes. A ShapeDrawable takes a Shape object and manages its presence on the screen. If no Shape is given, then the ShapeDrawable will default to a RectShape. <a href=https://developer.android.com/reference/android/graphics/drawable/ShapeDrawable target=_blank>more</a></p></blockquote><p>In other words, it says <em>With ShapeDrawable, we can draw shapes as a drawable.</em> So, let&rsquo;s create a <code>DText</code> class extending the <code>ShapeDrawable</code> class and override a few methods.</p><div class=highlight><pre class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>DText</span> <span class=kd>extends</span> <span class=n>ShapeDrawable</span> <span class=o>{</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>draw</span><span class=o>(</span><span class=n>Canvas</span> <span class=n>canvas</span><span class=o>)</span> <span class=o>{</span>
+        <span class=kd>super</span><span class=o>.</span><span class=na>draw</span><span class=o>(</span><span class=n>canvas</span><span class=o>);</span>
+        <span class=c1>// Here we will draw the actual canvas.
+</span><span class=c1></span>    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setAlpha</span><span class=o>(</span><span class=kt>int</span> <span class=n>alpha</span><span class=o>)</span> <span class=o>{</span>
+        <span class=c1>// Here we will set alpha to our paint class instance.
+</span><span class=c1></span>    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setColorFilter</span><span class=o>(</span><span class=n>ColorFilter</span> <span class=n>cf</span><span class=o>)</span> <span class=o>{</span>
+        <span class=c1>// Here we will set a color filter to our paint class instance.
+</span><span class=c1></span>    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>getOpacity</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Here we will return PixelFormat.TRANSLUCENT as opacity.
+</span><span class=c1></span>        <span class=c1>// So that it can be partially transparent and should have
+</span><span class=c1></span>        <span class=c1>// alpha blending applied.
+</span><span class=c1></span>        <span class=k>return</span> <span class=n>PixelFormat</span><span class=o>.</span><span class=na>TRANSLUCENT</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>getIntrinsicWidth</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Here we will return our canvas width.
+</span><span class=c1></span>        <span class=k>return</span> <span class=n>0</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>getIntrinsicHeight</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Here we will return our canvas height.
+</span><span class=c1></span>        <span class=k>return</span> <span class=n>0</span><span class=o>;</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><p>Now, we have a class called <code>DText</code> that extends <code>ShapeDrawable</code> class. We also override a few methods that we are going to use later on.</p><p>After that, we need a builder class to initialize variables and configurations. So, let&rsquo;s create a <code>Builder</code> class inside of the <code>DText</code> class.</p><div class=highlight><pre class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>DText</span> <span class=kd>extends</span> <span class=n>ShapeDrawable</span> <span class=o>{</span>
+
+    <span class=kd>private</span> <span class=nf>DText</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Here we will initialize variables based on builder configurations.
+</span><span class=c1></span>        <span class=c1>// We made this constructor private, because we do not want an
+</span><span class=c1></span>        <span class=c1>// DText class instance directly.
+</span><span class=c1></span>        <span class=c1>// Which will be useless without a proper drawable.
+</span><span class=c1></span>    <span class=o>}</span>
+
+	<span class=o>...</span>
+
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kd>class</span> <span class=nc>Builder</span> <span class=o>{</span>
+
+        <span class=kd>public</span> <span class=nf>Builder</span><span class=o>()</span> <span class=o>{</span>
+            <span class=c1>// Here we will initialize default variables.
+</span><span class=c1></span>        <span class=o>}</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><p>We have builder class. Now it’s time to create some variables for configuration.</p><div class=highlight><pre class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>static</span> <span class=kd>class</span> <span class=nc>Builder</span> <span class=o>{</span>
+
+    <span class=c1>// We need a shape to draw
+</span><span class=c1></span>    <span class=kd>private</span> <span class=n>Shape</span> <span class=n>shape</span><span class=o>;</span>
+
+    <span class=c1>// Original text that is going to be drawn
+</span><span class=c1></span>    <span class=kd>private</span> <span class=n>String</span> <span class=n>text</span><span class=o>;</span>
+
+    <span class=c1>// We need a typeface for fonts
+</span><span class=c1></span>    <span class=kd>private</span> <span class=n>Typeface</span> <span class=n>typeface</span><span class=o>;</span>
+
+    <span class=c1>// Text and background color on the canvas
+</span><span class=c1></span>    <span class=kd>private</span> <span class=kt>int</span> <span class=n>textColor</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=kt>int</span> <span class=n>backgroundColor</span><span class=o>;</span>
+
+    <span class=c1>// Text size on the canvas
+</span><span class=c1></span>    <span class=kd>private</span> <span class=kt>float</span> <span class=n>textSize</span><span class=o>;</span>
+
+    <span class=c1>// Width and height of the canvas
+</span><span class=c1></span>    <span class=kd>private</span> <span class=kt>float</span> <span class=n>width</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=kt>float</span> <span class=n>height</span><span class=o>;</span>
+
+    <span class=kd>public</span> <span class=nf>Builder</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Let&#39;s initialize defaults
+</span><span class=c1></span>        <span class=n>text</span> <span class=o>=</span> <span class=s>&#34;&#34;</span><span class=o>;</span>
+        <span class=n>textSize</span> <span class=o>=</span> <span class=o>-</span><span class=n>1</span><span class=o>;</span>
+        <span class=n>width</span> <span class=o>=</span> <span class=o>-</span><span class=n>1</span><span class=o>;</span>
+        <span class=n>height</span> <span class=o>=</span> <span class=o>-</span><span class=n>1</span><span class=o>;</span>
+        <span class=n>backgroundColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>GRAY</span><span class=o>;</span>
+        <span class=n>textColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>WHITE</span><span class=o>;</span>
+        <span class=n>shape</span> <span class=o>=</span> <span class=k>new</span> <span class=n>RectShape</span><span class=o>();</span> <span class=c1>// We will draw a rectangle shaped drawable
+</span><span class=c1></span>        <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>DEFAULT</span><span class=o>;</span>
+    <span class=o>}</span>
+    
+    <span class=c1>// We need setter methods for those variables
+</span><span class=c1></span>    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setText</span><span class=o>(</span><span class=n>String</span> <span class=n>text</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>text</span> <span class=o>=</span> <span class=n>text</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setHeight</span><span class=o>(</span><span class=kt>float</span> <span class=n>height</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>height</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setWidth</span><span class=o>(</span><span class=kt>float</span> <span class=n>width</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>width</span> <span class=o>=</span> <span class=n>width</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTypeface</span><span class=o>(</span><span class=n>Typeface</span> <span class=n>typeface</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>typeface</span> <span class=o>=</span> <span class=n>typeface</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTextSize</span><span class=o>(</span><span class=kt>float</span> <span class=n>textSize</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>textSize</span> <span class=o>=</span> <span class=n>textSize</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTextColor</span><span class=o>(</span><span class=kt>int</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>textColor</span> <span class=o>=</span> <span class=n>color</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTextColor</span><span class=o>(</span><span class=n>String</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>textColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>parseColor</span><span class=o>(</span><span class=n>color</span><span class=o>);</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setBackgroundColor</span><span class=o>(</span><span class=kt>int</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>backgroundColor</span> <span class=o>=</span> <span class=n>color</span><span class=o>;</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setBackgroundColor</span><span class=o>(</span><span class=n>String</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>backgroundColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>parseColor</span><span class=o>(</span><span class=n>color</span><span class=o>);</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>boldText</span><span class=o>()</span> <span class=o>{</span>
+        <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>typeface</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>BOLD</span><span class=o>);</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>italicText</span><span class=o>()</span> <span class=o>{</span>
+        <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>typeface</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>ITALIC</span><span class=o>);</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>boldItalicText</span><span class=o>()</span> <span class=o>{</span>
+        <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>typeface</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>BOLD_ITALIC</span><span class=o>);</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>drawAsRectangle</span><span class=o>()</span> <span class=o>{</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>shape</span> <span class=o>=</span> <span class=k>new</span> <span class=n>RectShape</span><span class=o>();</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>drawAsRound</span><span class=o>()</span> <span class=o>{</span>
+        <span class=n>shape</span> <span class=o>=</span> <span class=k>new</span> <span class=n>OvalShape</span><span class=o>();</span>
+        <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=n>DText</span> <span class=nf>build</span><span class=o>()</span> <span class=o>{</span>
+        <span class=k>return</span> <span class=k>new</span> <span class=n>DText</span><span class=o>(</span><span class=k>this</span><span class=o>);</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><p>Up to this, we have few customization variables in our hand. Now it’s time to actually draw on the canvas…</p><div class=highlight><pre class=chroma><code class=language-java data-lang=java><span class=kd>public</span> <span class=kd>class</span> <span class=nc>DText</span> <span class=kd>extends</span> <span class=n>ShapeDrawable</span> <span class=o>{</span>
+
+    <span class=kd>private</span> <span class=kd>final</span> <span class=n>Builder</span> <span class=n>builder</span><span class=o>;</span>
+    <span class=kd>private</span> <span class=kd>final</span> <span class=n>Paint</span> <span class=n>textPaint</span><span class=o>;</span>
+
+    <span class=kd>private</span> <span class=nf>DText</span><span class=o>(</span><span class=n>Builder</span> <span class=n>builder</span><span class=o>)</span> <span class=o>{</span>
+        <span class=kd>super</span><span class=o>(</span><span class=n>builder</span><span class=o>.</span><span class=na>shape</span><span class=o>);</span>
+        <span class=k>this</span><span class=o>.</span><span class=na>builder</span> <span class=o>=</span> <span class=n>builder</span><span class=o>;</span>
+
+        <span class=c1>// Initialize paint class for text
+</span><span class=c1></span>        <span class=n>textPaint</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Paint</span><span class=o>();</span>
+        <span class=n>textPaint</span><span class=o>.</span><span class=na>setAntiAlias</span><span class=o>(</span><span class=kc>true</span><span class=o>);</span>
+        <span class=n>textPaint</span><span class=o>.</span><span class=na>setStyle</span><span class=o>(</span><span class=n>Paint</span><span class=o>.</span><span class=na>Style</span><span class=o>.</span><span class=na>FILL</span><span class=o>);</span>
+        <span class=n>textPaint</span><span class=o>.</span><span class=na>setTextAlign</span><span class=o>(</span><span class=n>Paint</span><span class=o>.</span><span class=na>Align</span><span class=o>.</span><span class=na>CENTER</span><span class=o>);</span>
+        <span class=n>textPaint</span><span class=o>.</span><span class=na>setColor</span><span class=o>(</span><span class=n>builder</span><span class=o>.</span><span class=na>textColor</span><span class=o>);</span>
+        <span class=n>textPaint</span><span class=o>.</span><span class=na>setTypeface</span><span class=o>(</span><span class=n>builder</span><span class=o>.</span><span class=na>typeface</span><span class=o>);</span>
+
+        <span class=c1>// Initialize paint class for background
+</span><span class=c1></span>        <span class=n>Paint</span> <span class=n>paint</span> <span class=o>=</span> <span class=n>getPaint</span><span class=o>();</span>
+        <span class=n>paint</span><span class=o>.</span><span class=na>setColor</span><span class=o>(</span><span class=n>builder</span><span class=o>.</span><span class=na>backgroundColor</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>draw</span><span class=o>(</span><span class=n>Canvas</span> <span class=n>canvas</span><span class=o>)</span> <span class=o>{</span>
+        <span class=kd>super</span><span class=o>.</span><span class=na>draw</span><span class=o>(</span><span class=n>canvas</span><span class=o>);</span>
+
+        <span class=c1>// We need drawable bounds rect
+</span><span class=c1></span>        <span class=n>Rect</span> <span class=n>bounds</span> <span class=o>=</span> <span class=n>getBounds</span><span class=o>();</span>
+
+        <span class=c1>// We need to save current canvas matrix
+</span><span class=c1></span>        <span class=c1>// So that we can restore it later
+</span><span class=c1></span>        <span class=kt>int</span> <span class=n>savedCanvasCount</span> <span class=o>=</span> <span class=n>canvas</span><span class=o>.</span><span class=na>save</span><span class=o>();</span>
+
+        <span class=c1>// Now translate our canvas from bounds rect
+</span><span class=c1></span>        <span class=n>canvas</span><span class=o>.</span><span class=na>translate</span><span class=o>(</span><span class=n>bounds</span><span class=o>.</span><span class=na>left</span><span class=o>,</span> <span class=n>bounds</span><span class=o>.</span><span class=na>top</span><span class=o>);</span>
+
+        <span class=c1>// If builder class does not provide a valid width and height,
+</span><span class=c1></span>        <span class=c1>// use bounds rect&#39;s width and height as canvas&#39;s width and height.
+</span><span class=c1></span>        <span class=c1>// We want to fill the whole drawable by default.
+</span><span class=c1></span>        <span class=kt>float</span> <span class=n>canvasWidth</span> <span class=o>=</span> <span class=n>builder</span><span class=o>.</span><span class=na>width</span> <span class=o>&lt;</span> <span class=n>0</span> <span class=o>?</span> <span class=n>bounds</span><span class=o>.</span><span class=na>width</span><span class=o>()</span> <span class=o>:</span> <span class=n>builder</span><span class=o>.</span><span class=na>width</span><span class=o>;</span>
+        <span class=kt>float</span> <span class=n>canvasHeight</span> <span class=o>=</span> <span class=n>builder</span><span class=o>.</span><span class=na>height</span> <span class=o>&lt;</span> <span class=n>0</span> <span class=o>?</span> <span class=n>bounds</span><span class=o>.</span><span class=na>height</span><span class=o>()</span> <span class=o>:</span> <span class=n>builder</span><span class=o>.</span><span class=na>height</span><span class=o>;</span>
+
+        <span class=c1>// If builder class does not provide a valid text size,
+</span><span class=c1></span>        <span class=c1>// calculate text size from canvas width and height.
+</span><span class=c1></span>        <span class=c1>// Use half of the lowest dimension as text size by default.
+</span><span class=c1></span>        <span class=c1>// It can be width or height.
+</span><span class=c1></span>        <span class=kt>float</span> <span class=n>textSize</span> <span class=o>=</span> <span class=n>builder</span><span class=o>.</span><span class=na>textSize</span> <span class=o>&lt;</span> <span class=n>0</span> <span class=o>?</span>
+                <span class=o>(</span><span class=n>Math</span><span class=o>.</span><span class=na>min</span><span class=o>(</span><span class=n>canvasWidth</span><span class=o>,</span> <span class=n>canvasHeight</span><span class=o>)</span> <span class=o>/</span> <span class=n>2</span><span class=o>)</span> <span class=o>:</span> <span class=n>builder</span><span class=o>.</span><span class=na>textSize</span><span class=o>;</span>
+        <span class=n>textPaint</span><span class=o>.</span><span class=na>setTextSize</span><span class=o>(</span><span class=n>textSize</span><span class=o>);</span>
+
+        <span class=c1>// Now it&#39;s time to draw the text on the canvas.
+</span><span class=c1></span>        <span class=n>canvas</span><span class=o>.</span><span class=na>drawText</span><span class=o>(</span><span class=n>builder</span><span class=o>.</span><span class=na>text</span><span class=o>,</span> <span class=n>canvasWidth</span> <span class=o>/</span> <span class=n>2</span><span class=o>,</span> <span class=n>canvasHeight</span> <span class=o>/</span> <span class=n>2</span> <span class=o>-</span>
+                <span class=o>((</span><span class=n>textPaint</span><span class=o>.</span><span class=na>descent</span><span class=o>()</span> <span class=o>+</span> <span class=n>textPaint</span><span class=o>.</span><span class=na>ascent</span><span class=o>())</span> <span class=o>/</span> <span class=n>2</span><span class=o>),</span> <span class=n>textPaint</span><span class=o>);</span>
+
+        <span class=c1>// Restore previous matrix to the canvas
+</span><span class=c1></span>        <span class=n>canvas</span><span class=o>.</span><span class=na>restoreToCount</span><span class=o>(</span><span class=n>savedCanvasCount</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setAlpha</span><span class=o>(</span><span class=kt>int</span> <span class=n>alpha</span><span class=o>)</span> <span class=o>{</span>
+        <span class=c1>// Set alpha to our paint class instance.
+</span><span class=c1></span>        <span class=n>textPaint</span><span class=o>.</span><span class=na>setAlpha</span><span class=o>(</span><span class=n>alpha</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setColorFilter</span><span class=o>(</span><span class=n>ColorFilter</span> <span class=n>cf</span><span class=o>)</span> <span class=o>{</span>
+        <span class=c1>// Set color filter to our paint class instance.
+</span><span class=c1></span>        <span class=n>textPaint</span><span class=o>.</span><span class=na>setColorFilter</span><span class=o>(</span><span class=n>cf</span><span class=o>);</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>getOpacity</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Here we will return PixelFormat.TRANSLUCENT as opacity.
+</span><span class=c1></span>        <span class=c1>// So that it can be partially transparent and should have
+</span><span class=c1></span>        <span class=c1>// alpha blending applied.
+</span><span class=c1></span>        <span class=k>return</span> <span class=n>PixelFormat</span><span class=o>.</span><span class=na>TRANSLUCENT</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>getIntrinsicWidth</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Return our canvas width.
+</span><span class=c1></span>        <span class=k>return</span> <span class=o>(</span><span class=kt>int</span><span class=o>)</span> <span class=n>builder</span><span class=o>.</span><span class=na>width</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=nd>@Override</span>
+    <span class=kd>public</span> <span class=kt>int</span> <span class=nf>getIntrinsicHeight</span><span class=o>()</span> <span class=o>{</span>
+        <span class=c1>// Return our canvas height.
+</span><span class=c1></span>        <span class=k>return</span> <span class=o>(</span><span class=kt>int</span><span class=o>)</span> <span class=n>builder</span><span class=o>.</span><span class=na>height</span><span class=o>;</span>
+    <span class=o>}</span>
+
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kd>class</span> <span class=nc>Builder</span> <span class=o>{</span>
+
+        <span class=c1>// We need a shape to draw
+</span><span class=c1></span>        <span class=kd>private</span> <span class=n>Shape</span> <span class=n>shape</span><span class=o>;</span>
+
+        <span class=c1>// Original text that is going to be drawn
+</span><span class=c1></span>        <span class=kd>private</span> <span class=n>String</span> <span class=n>text</span><span class=o>;</span>
+
+        <span class=c1>// We need a typeface for fonts
+</span><span class=c1></span>        <span class=kd>private</span> <span class=n>Typeface</span> <span class=n>typeface</span><span class=o>;</span>
+
+        <span class=c1>// Text and background color on the canvas
+</span><span class=c1></span>        <span class=kd>private</span> <span class=kt>int</span> <span class=n>textColor</span><span class=o>;</span>
+        <span class=kd>private</span> <span class=kt>int</span> <span class=n>backgroundColor</span><span class=o>;</span>
+
+        <span class=c1>// Text size on the canvas
+</span><span class=c1></span>        <span class=kd>private</span> <span class=kt>float</span> <span class=n>textSize</span><span class=o>;</span>
+
+        <span class=c1>// Width and height of the canvas
+</span><span class=c1></span>        <span class=kd>private</span> <span class=kt>float</span> <span class=n>width</span><span class=o>;</span>
+        <span class=kd>private</span> <span class=kt>float</span> <span class=n>height</span><span class=o>;</span>
+
+        <span class=kd>public</span> <span class=nf>Builder</span><span class=o>()</span> <span class=o>{</span>
+            <span class=c1>// Let&#39;s initialize defaults
+</span><span class=c1></span>            <span class=n>text</span> <span class=o>=</span> <span class=s>&#34;&#34;</span><span class=o>;</span>
+            <span class=n>textSize</span> <span class=o>=</span> <span class=o>-</span><span class=n>1</span><span class=o>;</span>
+            <span class=n>width</span> <span class=o>=</span> <span class=o>-</span><span class=n>1</span><span class=o>;</span>
+            <span class=n>height</span> <span class=o>=</span> <span class=o>-</span><span class=n>1</span><span class=o>;</span>
+            <span class=n>backgroundColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>GRAY</span><span class=o>;</span>
+            <span class=n>textColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>WHITE</span><span class=o>;</span>
+            <span class=n>shape</span> <span class=o>=</span> <span class=k>new</span> <span class=n>RectShape</span><span class=o>();</span> <span class=c1>// We will draw a rectangle shaped drawable
+</span><span class=c1></span>            <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>DEFAULT</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setText</span><span class=o>(</span><span class=n>String</span> <span class=n>text</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>text</span> <span class=o>=</span> <span class=n>text</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setHeight</span><span class=o>(</span><span class=kt>float</span> <span class=n>height</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>height</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setWidth</span><span class=o>(</span><span class=kt>float</span> <span class=n>width</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>width</span> <span class=o>=</span> <span class=n>width</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTypeface</span><span class=o>(</span><span class=n>Typeface</span> <span class=n>typeface</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>typeface</span> <span class=o>=</span> <span class=n>typeface</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTextSize</span><span class=o>(</span><span class=kt>float</span> <span class=n>textSize</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>textSize</span> <span class=o>=</span> <span class=n>textSize</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTextColor</span><span class=o>(</span><span class=kt>int</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>textColor</span> <span class=o>=</span> <span class=n>color</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setTextColor</span><span class=o>(</span><span class=n>String</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>textColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>parseColor</span><span class=o>(</span><span class=n>color</span><span class=o>);</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setBackgroundColor</span><span class=o>(</span><span class=kt>int</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>backgroundColor</span> <span class=o>=</span> <span class=n>color</span><span class=o>;</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>setBackgroundColor</span><span class=o>(</span><span class=n>String</span> <span class=n>color</span><span class=o>)</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>backgroundColor</span> <span class=o>=</span> <span class=n>Color</span><span class=o>.</span><span class=na>parseColor</span><span class=o>(</span><span class=n>color</span><span class=o>);</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>boldText</span><span class=o>()</span> <span class=o>{</span>
+            <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>typeface</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>BOLD</span><span class=o>);</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>italicText</span><span class=o>()</span> <span class=o>{</span>
+            <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>typeface</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>ITALIC</span><span class=o>);</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>boldItalicText</span><span class=o>()</span> <span class=o>{</span>
+            <span class=n>typeface</span> <span class=o>=</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>typeface</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>BOLD_ITALIC</span><span class=o>);</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>drawAsRectangle</span><span class=o>()</span> <span class=o>{</span>
+            <span class=k>this</span><span class=o>.</span><span class=na>shape</span> <span class=o>=</span> <span class=k>new</span> <span class=n>RectShape</span><span class=o>();</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>Builder</span> <span class=nf>drawAsRound</span><span class=o>()</span> <span class=o>{</span>
+            <span class=n>shape</span> <span class=o>=</span> <span class=k>new</span> <span class=n>OvalShape</span><span class=o>();</span>
+            <span class=k>return</span> <span class=k>this</span><span class=o>;</span>
+        <span class=o>}</span>
+
+        <span class=kd>public</span> <span class=n>DText</span> <span class=nf>build</span><span class=o>()</span> <span class=o>{</span>
+            <span class=k>return</span> <span class=k>new</span> <span class=n>DText</span><span class=o>(</span><span class=k>this</span><span class=o>);</span>
+        <span class=o>}</span>
+    <span class=o>}</span>
+<span class=o>}</span>
+</code></pre></div><h2 id=testing>Testing</h2><p>This is the full <code>DText</code> class up to now. Let’s test it in our activity class. We have an <code>ImageView</code> as <code>demoImageView</code>. Now, let&rsquo;s create a drawable text using <code>DText</code> class and set it as an image drawable to the <code>ImageView</code>.</p><div class=highlight><pre class=chroma><code class=language-Java data-lang=Java><span class=nd>@Override</span>
+<span class=kd>protected</span> <span class=kt>void</span> <span class=nf>onCreate</span><span class=o>(</span><span class=n>Bundle</span> <span class=n>savedInstanceState</span><span class=o>)</span> <span class=o>{</span>
+    <span class=kd>super</span><span class=o>.</span><span class=na>onCreate</span><span class=o>(</span><span class=n>savedInstanceState</span><span class=o>);</span>
+    <span class=n>setContentView</span><span class=o>(</span><span class=n>R</span><span class=o>.</span><span class=na>layout</span><span class=o>.</span><span class=na>activity_main</span><span class=o>);</span>
+    <span class=n>demoImageView</span> <span class=o>=</span> <span class=n>findViewById</span><span class=o>(</span><span class=n>R</span><span class=o>.</span><span class=na>id</span><span class=o>.</span><span class=na>demo_image_view</span><span class=o>);</span>
+    <span class=n>Drawable</span> <span class=n>drawableText</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DText</span><span class=o>.</span><span class=na>Builder</span><span class=o>()</span>
+        <span class=o>.</span><span class=na>setText</span><span class=o>(</span><span class=s>&#34;First&#34;</span><span class=o>)</span>
+        <span class=o>.</span><span class=na>setTextColor</span><span class=o>(</span><span class=n>Color</span><span class=o>.</span><span class=na>RED</span><span class=o>)</span>
+        <span class=o>.</span><span class=na>setBackgroundColor</span><span class=o>(</span><span class=n>Color</span><span class=o>.</span><span class=na>BLUE</span><span class=o>)</span>
+        <span class=o>.</span><span class=na>build</span><span class=o>();</span>
+    <span class=n>demoImageView</span><span class=o>.</span><span class=na>setImageDrawable</span><span class=o>(</span><span class=n>drawableText</span><span class=o>);</span>
+<span class=o>}</span>
+</code></pre></div><p>And voila&mldr; We have a drawable which is created from a text.</p><figure><img src=https://alshakib.dev/images/story_of_android_dtext_library/android_dtext_library_1.jpg alt="First drawable from a text" width=250><figcaption><p>First drawable from a text</p></figcaption></figure><h2 id=adding-customization>Adding Customization</h2><p>Up to this, we have a fully working DText class that creates drawables from text. Now we can add customizations like,</p><div class=highlight><pre class=chroma><code class=language-java data-lang=java><span class=c1>// Create an instance of Builder class.
+</span><span class=c1></span><span class=n>DText</span><span class=o>.</span><span class=na>Builder</span> <span class=n>builder</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DText</span><span class=o>.</span><span class=na>Builder</span><span class=o>();</span>
+
+<span class=c1>// Set text that we are going to draw.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setText</span><span class=o>(</span><span class=s>&#34;Android DText Library&#34;</span><span class=o>);</span>
+
+<span class=c1>// Draw only the first character.
+</span><span class=c1>// If the text is &#34;android&#34;,
+</span><span class=c1>// then the builder will draw &#34;a&#34; on the canvas.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>firstCharOnly</span><span class=o>();</span>
+
+<span class=c1>// Draw only the alphanumeric character.
+</span><span class=c1>// If the text is &#34;&lt;Unknown&gt;&#34;,
+</span><span class=c1>// then the builder will draw first alphanumeric character
+</span><span class=c1>// from the text. In this case, it is &#34;U&#34;.
+</span><span class=c1>// NOTE: alphaNumOnly() will not work without firstCharOnly().
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>alphaNumOnly</span><span class=o>();</span>
+
+<span class=c1>// Draw only the first digit from the text.
+</span><span class=c1>// If the text is &#34;You have 5 notifications&#34;,
+</span><span class=c1>// then the builder will draw &#34;5&#34; on the canvas.
+</span><span class=c1>// NOTE: digitOnly() will not work without firstCharOnly().
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>digitOnly</span><span class=o>();</span>
+
+<span class=c1>// Use random background color from a nice preset background color list.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>randomBackgroundColor</span><span class=o>();</span>
+
+<span class=c1>// You can pass your own color list to the builder as well.
+</span><span class=c1></span><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span> <span class=n>colorList</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ArrayList</span><span class=o>&lt;&gt;();</span>
+<span class=n>colorList</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;#9C27B0&#34;</span><span class=o>);</span>
+<span class=n>colorList</span><span class=o>.</span><span class=na>add</span><span class=o>(</span><span class=s>&#34;#EF6C00&#34;</span><span class=o>);</span>
+<span class=n>builder</span><span class=o>.</span><span class=na>setRandomColorList</span><span class=o>(</span><span class=n>colorList</span><span class=o>);</span>
+
+<span class=c1>// You can set a background color as well.
+</span><span class=c1>// By default, the background color is gray.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setBackgroundColor</span><span class=o>(</span><span class=n>Color</span><span class=o>.</span><span class=na>BLUE</span><span class=o>);</span>
+<span class=c1>// or
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setBackgroundColor</span><span class=o>(</span><span class=s>&#34;#0000FF&#34;</span><span class=o>);</span>
+
+<span class=c1>// You can set text color with integer or string (HEX) value.
+</span><span class=c1>// By default, the text color is white.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setTextColor</span><span class=o>(</span><span class=n>Color</span><span class=o>.</span><span class=na>RED</span><span class=o>);</span>
+<span class=c1>// or
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setTextColor</span><span class=o>(</span><span class=s>&#34;#FF0000&#34;</span><span class=o>);</span>
+
+<span class=c1>// Set height and width of the canvas.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setHeight</span><span class=o>(</span><span class=n>150</span><span class=o>);</span>
+<span class=n>builder</span><span class=o>.</span><span class=na>setWidth</span><span class=o>(</span><span class=n>150</span><span class=o>);</span>
+
+<span class=c1>// Set text size.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setTextSize</span><span class=o>(</span><span class=n>24</span><span class=o>);</span>
+
+<span class=c1>// By default, DText uses pixels to calculate height, width and text size.
+</span><span class=c1>// But you can use DP for height/width and SP for text size as well
+</span><span class=c1>// by passing a context to the builder.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>useSpAndDp</span><span class=o>(</span><span class=n>context</span><span class=o>);</span>
+
+<span class=c1>// Use bold text.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>boldText</span><span class=o>();</span>
+
+<span class=c1>// Use italic text.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>italicText</span><span class=o>();</span>
+
+<span class=c1>// Use bold italic text.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>boldItalicText</span><span class=o>();</span>
+
+<span class=c1>// By default, DText uses Typeface.DEFAULT.
+</span><span class=c1>// But you can pass your own typeface as well.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>setTypeface</span><span class=o>(</span><span class=n>Typeface</span><span class=o>.</span><span class=na>create</span><span class=o>(</span><span class=n>Typeface</span><span class=o>.</span><span class=na>MONOSPACE</span><span class=o>,</span> <span class=n>Typeface</span><span class=o>.</span><span class=na>NORMAL</span><span class=o>));</span>
+
+<span class=c1>// Transform to upper case letter.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>toUpperCase</span><span class=o>();</span>
+
+<span class=c1>// Draw as a round on the canvas.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>drawAsRound</span><span class=o>();</span>
+
+<span class=c1>// Draw as a rectangle on the canvas.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>drawAsRectangle</span><span class=o>();</span>
+
+<span class=c1>// Draw as a rectangle with border radius on the canvas.
+</span><span class=c1></span><span class=n>builder</span><span class=o>.</span><span class=na>drawAsRectangle</span><span class=o>(</span><span class=n>16</span><span class=o>);</span>
+</code></pre></div><p>After creating our final library we can use it like these..</p><figure><img src=https://alshakib.dev/images/story_of_android_dtext_library/android_dtext_library_2.jpg alt="First letter avatar with round shape" width=250><figcaption><p>First letter avatar with round shape</p></figcaption></figure><h2 id=final-words>Final Words</h2><p>Thanks for reading this article. If you have any question or confusion regarding the tutorial, feel free to ask your questions on <a href=https://t.me/AlShakib target=_blank>Telegram</a>
+or <a href=https://twitter.com/_alshakib target=_blank>Twitter</a>
+. You can send me an email as well.</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
+2020 -
+2021
+Al Shakib</section></footer></main><script type=text/javascript>var menuToggleButton=document.getElementById('menu-toggle');document.getElementById('main-content').onclick=function(a){menuToggleButton.checked=!1}</script></body></html>
